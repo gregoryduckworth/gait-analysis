@@ -324,7 +324,8 @@ const Visualizer = (() => {
 
         const viewCfg = VIEW_CONFIG[cameraAngle.view] || VIEW_CONFIG.unknown;
 
-        badge.className = `angle-badge ${viewCfg.css}`;
+        // Preserve Tailwind utility classes, only update state classes
+        badge.className = `angle-badge ${viewCfg.css} inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-semibold text-sm flex-shrink-0`;
         iconEl.textContent = viewCfg.icon;
         labelEl.textContent = cameraAngle.label || viewCfg.label;
         confPct.textContent = `${(cameraAngle.confidence * 100).toFixed(0)}%`;
@@ -332,7 +333,7 @@ const Visualizer = (() => {
         noteEl.textContent = cameraAngle.notes || "";
 
         // Color confidence bar based on view type
-        const barColors = { sagittal: "var(--success)", coronal: "var(--accent)", diagonal: "var(--warning)", unknown: "var(--text-secondary)" };
+        const barColors = { sagittal: "#22c55e", coronal: "#667eea", diagonal: "#eab308", unknown: "#9ca3af" };
         confBar.style.background = barColors[cameraAngle.view] || barColors.unknown;
 
         // Render reliability tags
@@ -366,7 +367,8 @@ const Visualizer = (() => {
             const dot = document.getElementById(dotId);
             if (!dot) continue;
 
-            dot.className = "metric-confidence-dot";
+            // Preserve Tailwind utility classes, only update state classes
+            dot.className = "metric-confidence-dot absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full";
             if (unreliableSet.has(metricKey)) {
                 dot.classList.add("unreliable");
                 dot.title = "Unreliable from this angle";
